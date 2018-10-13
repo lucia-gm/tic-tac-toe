@@ -5,10 +5,11 @@ import '../css/App.css';
 class App extends Component {
   constructor() {
     super()
+    this.boardSize = 3;
     this.state = {
       turn: 'playerX',
-      tokensX: 3,
-      tokensO: 3,
+      tokensX: this.boardSize,
+      tokensO: this.boardSize,
       cellsX: [],
       cellsO: [],
     }
@@ -68,7 +69,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Board onCellClick={this.handleCellClick}/>
+        <Board onCellClick={this.handleCellClick} size={this.boardSize}/>
       </div>
     );
   }

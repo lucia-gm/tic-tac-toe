@@ -2,19 +2,33 @@ import React, { Component } from 'react';
 import Cell from './Cell.js';
 
 class Board extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      boardCells: [[0,0], [0,1], [0,2], [1,0], [1,1], [1,2], [2,0], [2,1], [2,2]],
+      board: [],
+    }
+
+    // Starting board
+    for (let i = 0; i < this.props.size; i++) {
+      let row = [];
+      for (let j = 0; j < this.props.size; j++) {
+        row.push(0);
+      }
+      this.state.board.push(row);
     }
   }
 
   render() {
+    
+    console.log(this.state.board);
+
     return (
       <div className="board">
-        {this.state.boardCells.map(boardCell => (
-          <Cell key={boardCell} position={boardCell} onCellClick={this.props.onCellClick}></Cell>
-        ))}
+        {this.state.board.map((row, rowIndex) => 
+          row.map((cellIndex) => (
+            <Cell key={cellIndex} position={`${rowIndex}-${cellIndex}`} onCellClick={this.props.onCellClick}></Cell>
+          ))
+        )}
       </div>
     )
   }
