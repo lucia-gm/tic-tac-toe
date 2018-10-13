@@ -25,9 +25,10 @@ class Board extends Component {
     eventCell.position = eventCell.getAttribute('position');
 
     // Update cell and check game win condition
-    if (this.updateCellValue(eventCell.position)) {
+    let lastMove = this.updateCellValue(eventCell.position);
+    if (lastMove) {
       eventCell.classList.add(this.props.activePlayer);
-      this.props.checkGameWin(this.state.board);
+      this.props.checkGameWin(this.state.board, lastMove);
     };
   }
 
@@ -39,7 +40,7 @@ class Board extends Component {
         let newBoard = this.state.board;
         newBoard[values[0]][values[1]] = this.props.activePlayer;
         this.setState({board: newBoard});
-        return true;
+        return values;
       }
     }
     return false;
