@@ -6,70 +6,37 @@ class App extends Component {
   constructor() {
     super()
     this.boardSize = 3;
+    this.moveCount = 0;
     this.state = {
-      turn: 'playerX',
-      tokensX: this.boardSize,
-      tokensO: this.boardSize,
-      cellsX: [],
-      cellsO: [],
+      activePlayer: 'cross', // cross is P1, circle is P2
     }
   }
 
-  handleCellClick = (event) => {
-    event.preventDefault();
-    let cell = event.target;
-    cell.position = cell.getAttribute('position');
-
-    if (cell.classList.contains('circle') || cell.classList.contains('cross')) {
-      alert('Please choose an empty cell');
-    } else {
-      if (this.state.turn === 'playerX') {
-        cell.classList.add('cross');
-        let updatedTokensX = this.state.tokensX - 1;
-
-        if (updatedTokensX === 0) {
-          this.handleEndGame(cell.position, this.state.cellsX)
-        }
-
-        this.state.cellsX.push(cell.position)
-        this.setState({turn: 'playerO',
-                       tokensX: updatedTokensX
-                     })
-      } else {
-        cell.classList.add('circle');
-        let updatedTokensO = this.state.tokensO - 1;
-
-        if (updatedTokensO === 0) {
-          this.handleEndGame(cell.position, this.state.cellsO)
-        }
-
-        this.state.cellsO.push(cell.position)
-        this.setState({turn: 'playerX',
-                      tokensO: updatedTokensO
-                    })
-      }
+  // Check game win condition
+  checkGameWin = (board) => {
+    if (this.moveCount >= ((this.boardSize * 2) - 2)) { // Players can only win after a certain numer of moves
+      // @TODO: check rows, columns, diagonals or game finished
+      console.log('check rows, columns and diagonals');
     }
+
+    this.nextPlayer();
   }
 
-  
-  handleEndGame = (cellClicked, cell) => {
-    // TODO check conditions for the target column, row and both diagonals 
-    // This was my first atempt and will need to check a better algorithm to solve it
-    if (cellClicked[0] === cell[0][0] && cellClicked[0] === cell[1][0]) {
-      alert('win');
-    } else if (cellClicked[1] === cell[0][1] && cellClicked[1] === cell[1][1]) {
-      alert('win');
-    } else if (cellClicked[0] === cellClicked[1] && cell[0][0] === cell[0][1] && cell[1][0] === cell[1][1]) {
-      alert('win');
+  // Turn moves to the other player
+  nextPlayer = () => {
+    if (this.state.activePlayer === 'cross') {
+      this.setState({activePlayer: 'circle'});
     } else {
-      alert('tie');
+      this.setState({activePlayer: 'cross'});
     }
+
+    this.moveCount++;
   }
 
   render() {
     return (
       <div className="App">
-        <Board onCellClick={this.handleCellClick} size={this.boardSize}/>
+        <Board onCellClick={this.handleCellClick} activePlayer={this.state.activePlayer} checkGameWin={this.checkGameWin} size={this.boardSize}/>
       </div>
     );
   }

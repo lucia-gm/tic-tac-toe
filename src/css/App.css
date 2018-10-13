@@ -24,6 +24,7 @@ body {
   align-items: center;
 }
 
+/* @TODO: make the layout work for diferent board sizes */
 .board {
   width: 60.0rem;
   display: flex;
@@ -45,6 +46,8 @@ body {
   transition: transform .15s ease-in-out;
   -webkit-transition: transform .15s ease-in-out;
 }
+
+/* @TODO: Show activePlayer symbol  */
 .cell:hover {
   cursor: pointer;
   background-color: #D2D2D2;

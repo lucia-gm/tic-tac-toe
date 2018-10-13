@@ -18,15 +18,39 @@ class Board extends Component {
     }
   }
 
-  render() {
-    
-    console.log(this.state.board);
+  // Handle players move
+  handleCellClick = (event) => {
+    event.preventDefault();
+    let eventCell = event.target;
+    eventCell.position = eventCell.getAttribute('position');
 
+    // Update cell and check game win condition
+    if (this.updateCellValue(eventCell.position)) {
+      eventCell.classList.add(this.props.activePlayer);
+      this.props.checkGameWin(this.state.board);
+    };
+  }
+
+  // Sets value on the clicked cell
+  updateCellValue = (position) => {
+    let values = position.split('-');
+    if (values.length === 2) {
+      if (this.state.board[values[0]][values[1]] === 0) {
+        let newBoard = this.state.board;
+        newBoard[values[0]][values[1]] = this.props.activePlayer;
+        this.setState({board: newBoard});
+        return true;
+      }
+    }
+    return false;
+  }
+
+  render() {
     return (
       <div className="board">
         {this.state.board.map((row, rowIndex) => 
-          row.map((cellIndex) => (
-            <Cell key={cellIndex} position={`${rowIndex}-${cellIndex}`} onCellClick={this.props.onCellClick}></Cell>
+          row.map((cell, cellIndex) => (
+            <Cell key={cellIndex} position={`${rowIndex}-${cellIndex}`} onCellClick={this.handleCellClick}></Cell>
           ))
         )}
       </div>
