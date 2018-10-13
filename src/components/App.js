@@ -17,12 +17,12 @@ class App extends Component {
   checkGameWin = (board, playerMove) => {
     let x = Number(playerMove[0]);
     let y = Number(playerMove[1]);
-    if (this.moveCount >= ((this.boardSize * 2) - 2)) { // Players can only win after a certain numer of moves
+    if (this.moveCount > ((this.boardSize * 2) - 2)) { // Players can only win after a certain numer of moves
       // @TODO: check rows, columns, diagonals or game finished
       if (!this.checkRows(board, x)) {
         if (!this.checkColumns(board, y)) {
           if (!this.checkDiagonals(board, x, y)) {
-            if (this.moveCount === ((this.boardSize * 2) - 1)) {
+            if (this.moveCount === (Math.pow(this.boardSize, 2) - 1)) {
               alert('tie');
             }
           }
