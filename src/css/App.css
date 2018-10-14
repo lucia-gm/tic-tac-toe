@@ -29,17 +29,21 @@ body {
   align-items: center;
 }
 
-/* @TODO: make the layout work for diferent board sizes */
 .board {
-  width: 60rem;
+  width: 80vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
 .cell {
-  width: 18rem;
-  height: 18rem;
+  max-width: 18rem;
+  max-height: 18rem;
   margin: 1rem;
   display: flex;
   justify-content: center;
@@ -144,24 +148,5 @@ body {
   from { 
     opacity: 0.2;
     transform: rotate(-20deg) scale(0);
-  }
-}
-
-/* Media queries */
-@media screen and (max-width:660px) {
-  html {
-    font-size: 42%;
-  }
-}
-
-@media screen and (max-width:440px) {
-  html {
-    font-size: 32%;
-  }
-}
-
-@media screen and (max-width:330px) {
-  html {
-    font-size: 20%;
   }
 }

@@ -16,6 +16,25 @@ class Board extends Component {
       }
       this.state.board.push(row);
     }
+
+    this.adjustCellSize(this.props.size);
+  }
+
+  // Adjust cells size based on the boardSize
+  adjustCellSize = (boardSize) => {
+    let css = `.cell { width: calc(80vw/${boardSize}); height:calc(80vw/${boardSize}) }`;
+    const head = document.querySelector("head");
+    const style = document.createElement('style');
+    style.type = 'text/css';
+
+    if (style.styleSheet){
+      // This is required for IE8 and below.
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
   }
 
   // Handle players move
@@ -48,12 +67,14 @@ class Board extends Component {
 
   render() {
     return (
-      <div className="board">
-        {this.state.board.map((row, rowIndex) => 
-          row.map((cell, cellIndex) => (
+      <div className="board circle">
+        {this.state.board.map((row, rowIndex) => (
+          <div className="row" key={rowIndex}>
+            {row.map((cell, cellIndex) => (
             <Cell key={cellIndex} position={`${rowIndex}-${cellIndex}`} onCellClick={this.handleCellClick}></Cell>
-          ))
-        )}
+          ))}
+          </div>
+        ))}
       </div>
     )
   }

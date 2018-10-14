@@ -7,7 +7,7 @@ import '../css/App.css';
 class App extends Component {
   constructor() {
     super()
-    this.boardSize = 3;
+    this.boardSize = 3; // Indicates the number of rows and columns of the board, you can increase this number to create a bigger board;
     this.moveCount = 0;
 
     this.state = {
