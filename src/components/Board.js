@@ -25,10 +25,10 @@ class Board extends Component {
     eventCell.position = eventCell.getAttribute('position');
 
     // Update cell and check game win condition
-    let lastMove = this.updateCellValue(eventCell.position);
-    if (lastMove) {
+    let playerMove = this.updateCellValue(eventCell.position);
+    if (playerMove) {
       eventCell.classList.add(this.props.activePlayer);
-      this.props.checkGameWin(this.state.board, lastMove);
+      this.props.checkGameWin(this.state.board, playerMove);
     };
   }
 

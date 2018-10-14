@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Board from './Board.js';
+import Modal from './Modal.js';
 import '../css/App.css';
 
 class App extends Component {
@@ -10,6 +11,7 @@ class App extends Component {
 
     this.state = {
       activePlayer: 'cross', // cross is P1, circle is P2
+      gameOver: false,
     }
   }
 
@@ -17,19 +19,24 @@ class App extends Component {
   checkGameWin = (board, playerMove) => {
     let x = Number(playerMove[0]);
     let y = Number(playerMove[1]);
-    if (this.moveCount > ((this.boardSize * 2) - 2)) { // Players can only win after a certain numer of moves
-      // @TODO: check rows, columns, diagonals or game finished
+    
+    // Check only when a player has enough moves to win
+    if (this.moveCount >= ((this.boardSize * 2) - 2)) { 
       if (!this.checkRows(board, x)) {
         if (!this.checkColumns(board, y)) {
           if (!this.checkDiagonals(board, x, y)) {
             if (this.moveCount === (Math.pow(this.boardSize, 2) - 1)) {
-              alert('tie');
+              this.setState({gameOver: 'tie'});
             }
           }
         }
       }
     }
-    this.nextPlayer();
+
+    // Turn for next player if game is not over
+    if (!this.state.gameOver) {
+      this.nextPlayer();      
+    }
   }
 
   // Check rows for a match
@@ -38,7 +45,7 @@ class App extends Component {
       if (board[x][i] !== this.state.activePlayer)
         break;
       if (i === this.boardSize - 1) {
-        alert('win');
+        this.setState({gameOver: this.state.activePlayer})
         return true;
       }
     }
@@ -51,7 +58,7 @@ class App extends Component {
       if (board[j][y] !== this.state.activePlayer)
         break;
       if (j === this.boardSize - 1) {
-        alert('win');
+        this.setState({gameOver: this.state.activePlayer})
         return true;
       } 
     }
@@ -66,7 +73,7 @@ class App extends Component {
         if (board[i][i] !== this.state.activePlayer)
           break;
         if (i === this.boardSize - 1) {
-          alert('win');
+          this.setState({gameOver: this.state.activePlayer})
           return true;
         } 
       }
@@ -76,7 +83,7 @@ class App extends Component {
         if (board[i][(this.boardSize-1-i)] !== this.state.activePlayer)
           break;
         if (i === this.boardSize - 1) {
-          alert('win');
+          this.setState({gameOver: this.state.activePlayer})
           return true;
         }
       }
@@ -96,9 +103,14 @@ class App extends Component {
   }
 
   render() {
+    const { activePlayer, gameOver } = this.state;
+
     return (
       <div className="App">
-        <Board onCellClick={this.handleCellClick} activePlayer={this.state.activePlayer} checkGameWin={this.checkGameWin} size={this.boardSize}/>
+         <Board onCellClick={this.handleCellClick} activePlayer={activePlayer} checkGameWin={this.checkGameWin} size={this.boardSize} /> 
+        {gameOver && (
+          <Modal activePlayer={activePlayer} winner={gameOver}/>
+        )}
       </div>
     );
   }
