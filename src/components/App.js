@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Board from './Board.js';
 import Modal from './Modal.js';
+import * as Sound from '../sounds.js';
 import '../css/App.css';
 
 class App extends Component {
@@ -94,8 +95,10 @@ class App extends Component {
   // Turn moves to the other player
   nextPlayer = () => {
     if (this.state.activePlayer === 'cross') {
+      Sound.crossMove.play();
       this.setState({activePlayer: 'circle'});
     } else {
+      Sound.circleMove.play();
       this.setState({activePlayer: 'cross'});
     }
 
