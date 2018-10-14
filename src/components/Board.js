@@ -67,7 +67,7 @@ class Board extends Component {
 
   render() {
     return (
-      <div className="board circle">
+      <div className={`board ${this.props.activePlayer}`}>
         {this.state.board.map((row, rowIndex) => (
           <div className="row" key={rowIndex}>
             {row.map((cell, cellIndex) => (
