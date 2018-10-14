@@ -92,6 +92,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  animation: animateModal 0.1s ease-in;
 }
 
 .modal-content {
@@ -100,9 +102,9 @@ body {
   box-shadow: 0.3rem 0.2rem 4rem 0 rgba(0,0,0,0.4);
   border-radius: 0.8rem;
   text-align: center;
-  animation: animatemodal 0.4s;
-  margin: 0 auto;
   padding: 0 1rem 4.8rem;
+  transform: rotate(0deg) scale(1);
+  animation: announceWinner 0.25s ease-in-out;
 }
 
 .modal-message{
@@ -131,8 +133,21 @@ body {
   cursor: pointer;
 }
 
-/* Media queries */
+/* Animations  */
+@keyframes animateModal {
+  from {
+    opacity: 0;
+  }
+}
 
+@keyframes announceWinner {
+  from { 
+    opacity: 0.2;
+    transform: rotate(-20deg) scale(0);
+  }
+}
+
+/* Media queries */
 @media screen and (max-width:660px) {
   html {
     font-size: 42%;
