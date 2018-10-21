@@ -38,31 +38,24 @@ class Board extends Component {
   }
 
   // Handle players move
-  handleCellClick = (event) => {
+  handleCellClick = (event, position) => {
     event.preventDefault();
-    let eventCell = event.target;
-    eventCell.position = eventCell.getAttribute('position');
 
     // Update cell and check game win condition
-    let playerMove = this.updateCellValue(eventCell.position);
+    let playerMove = this.updateCellValue(position);
     if (playerMove) {
-      eventCell.classList.add(this.props.activePlayer);
       this.props.checkGameWin(this.state.board, playerMove);
     };
   }
 
   // Sets value on the clicked cell
   updateCellValue = (position) => {
-    let values = position.split('-');
-    if (values.length === 2) {
-      if (this.state.board[values[0]][values[1]] === 0) {
-        let newBoard = this.state.board;
-        newBoard[values[0]][values[1]] = this.props.activePlayer;
-        this.setState({board: newBoard});
-        return values;
-      }
-    }
-    return false;
+    let [ x, y ] = position.split('-');
+    let newBoard = this.state.board;
+    newBoard[x][y] = this.props.activePlayer;
+    this.setState({board: newBoard});
+    
+    return [ x, y ];
   }
 
   render() {
@@ -71,7 +64,7 @@ class Board extends Component {
         {this.state.board.map((row, rowIndex) => (
           <div className="row" key={rowIndex}>
             {row.map((cell, cellIndex) => (
-            <Cell key={cellIndex} position={`${rowIndex}-${cellIndex}`} onCellClick={this.handleCellClick}></Cell>
+            <Cell key={cellIndex} position={`${rowIndex}-${cellIndex}`} onCellClick={!cell ? this.handleCellClick : undefined} cellClass={cell}></Cell>
           ))}
           </div>
         ))}
