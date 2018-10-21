@@ -23,14 +23,10 @@ class App extends Component {
     
     // Check only when a player has enough moves to win
     if (this.moveCount >= ((this.boardSize * 2) - 2)) { 
-      if (!this.checkRows(board, x)) {
-        if (!this.checkColumns(board, y)) {
-          if (!this.checkDiagonals(board, x, y)) {
-            if (this.moveCount === (Math.pow(this.boardSize, 2) - 1)) {
-              this.setState({gameOver: 'tie'});
-            }
-          }
-        }
+      if (this.checkRows(board, x) || this.checkColumns(board, y) || this.checkDiagonals(board, x, y)) {
+        this.setState({gameOver: this.state.activePlayer});
+      } else if (this.moveCount === (Math.pow(this.boardSize, 2) - 1)) {
+        this.setState({gameOver: 'tie'});
       }
     }
 
@@ -46,7 +42,6 @@ class App extends Component {
       if (board[x][i] !== this.state.activePlayer)
         break;
       if (i === this.boardSize - 1) {
-        this.setState({gameOver: this.state.activePlayer})
         return true;
       }
     }
@@ -59,7 +54,6 @@ class App extends Component {
       if (board[j][y] !== this.state.activePlayer)
         break;
       if (j === this.boardSize - 1) {
-        this.setState({gameOver: this.state.activePlayer})
         return true;
       } 
     }
@@ -74,7 +68,6 @@ class App extends Component {
         if (board[i][i] !== this.state.activePlayer)
           break;
         if (i === this.boardSize - 1) {
-          this.setState({gameOver: this.state.activePlayer})
           return true;
         } 
       }
@@ -84,7 +77,6 @@ class App extends Component {
         if (board[i][(this.boardSize-1-i)] !== this.state.activePlayer)
           break;
         if (i === this.boardSize - 1) {
-          this.setState({gameOver: this.state.activePlayer})
           return true;
         }
       }
