@@ -3,6 +3,8 @@ Tic-tac-toe is a game for two players, X and O, who take turns marking the space
 
 [View online demo](http://luciagm.net/tic-tac-toe/)
 
+[![Preview](src/images/preview.gif)](https://lucia-gm.github.io/tic-tac-toe/)
+
 
 ## How To Run The Application
 1. Download or clone this repository.
@@ -10,6 +12,7 @@ Tic-tac-toe is a game for two players, X and O, who take turns marking the space
     * install all project dependencies with `npm install`
     * start the server with `npm start`
 3. Visit the site in your browser at http://localhost:3000.
+
 
 ## License
 MIT License
