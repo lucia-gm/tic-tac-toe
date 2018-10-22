@@ -33,14 +33,6 @@ body {
   padding: 2rem;
 }
 
-.board.cross .cell:not(.circle):hover:after {
-  content: '\000D7';
-}
-
-.board.circle .cell:not(.cross):hover:after {
-  content: 'o';
-}
-
 .row {
   display: flex;
 }
@@ -156,5 +148,15 @@ body {
   from { 
     opacity: 0.2;
     transform: rotate(-20deg) scale(0);
+  }
+}
+
+@media screen and (hover: hover) {
+  .board.cross .cell:not(.circle):hover:after {
+    content: '\000D7';
+  }
+  
+  .board.circle .cell:not(.cross):hover:after {
+    content: 'o';
   }
 }
